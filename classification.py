@@ -29,9 +29,9 @@ train_transforms = transforms.Compose([
 val_transforms = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
-    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]) # can be use for confusion matrix and classification report to get 20% random datasets
 ])
-
+# This ensures that the validation set is not augmented, which is standard practice to evaluate the model's performance on unaltered data.
 train_dataset = datasets.ImageFolder(root=TRAIN_DIR, transform=train_transforms)
 val_dataset = datasets.ImageFolder(root=VAL_DIR, transform=val_transforms)
 
@@ -53,6 +53,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # 6. Training Loop
+# we use 20 epochs to test the pipeline as of now.
 EPOCHS = 20 # Running 30 epochs to test the pipeline
 best_acc = 0.0
 
